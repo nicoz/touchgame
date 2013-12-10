@@ -51,8 +51,7 @@ function ProcessEvent( points : int ) {
 function ProcessObjective (objective : String ) {
   
   for ( var index : int = 0; index < objectiveList.length ; index++ ) {
-    //When I get the targeted item
-    print( objective == objectiveList[index] );
+    //When I get the targeted item    
     if ( objective == objectiveList[index] && targets[index] > 0 ) {
       targets[index] = targets[index] - 1;
       var label : GameObject = GameObject.Find(objective + "Text");
@@ -62,6 +61,20 @@ function ProcessObjective (objective : String ) {
       shadow.guiText.text = objective + ' - ' + targets[index];
     }
   }
+}
+
+function ProcessBomb() {
+  // Find all the colliders on the Enemies layer within the bombRadius.
+  var enemies : GameObject[] = GameObject.FindGameObjectsWithTag("Enemy");
+
+  // For each collider...	
+  for( var go : GameObject in enemies) {
+    var currentName : String = go.GetComponent(ActionObjectMetaData).currentName;
+    var points : int = go.GetComponent(ActionObjectMetaData).points;
+    ProcessEvent(points);
+    ProcessObjective(currentName);
+    Destroy(go);
+  }	
 }
 
 function ChangeObjective() {
