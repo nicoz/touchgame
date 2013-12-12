@@ -1,16 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\My Scripts\PickupSpawner.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\My Scripts\GameManager.js">
     <Files>
+      <File FileName="Assets\My Scripts\GameManager.js" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Spawner.cs" Line="1" Column="1" />
-      <File FileName="Assets\My Scripts\GameManager.js" Line="54" Column="35" />
+      <File FileName="Assets\My Scripts\GameManager.js" Line="1" Column="1" />
       <File FileName="Assets\My Scripts\MainScore.js" Line="1" Column="1" />
-      <File FileName="Assets\My Scripts\Interactor.js" Line="23" Column="5" />
+      <File FileName="Assets\My Scripts\Interactor.js" Line="1" Column="1" />
       <File FileName="Assets\My Scripts\ActionObjectMetaData.js" Line="1" Column="1" />
       <File FileName="Assets\My Scripts\Spawner.js" Line="1" Column="1" />
       <File FileName="Assets\My Scripts\PickupSpawner.js" Line="30" Column="1" />
-      <File FileName="Assets\My Scripts\BombPickup.js" Line="29" Column="25" />
-      <File FileName="Assets\My Scripts\Bomb.js" Line="53" Column="67" />
+      <File FileName="Assets\My Scripts\BombPickup.js" Line="1" Column="1" />
+      <File FileName="Assets\My Scripts\Bomb.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

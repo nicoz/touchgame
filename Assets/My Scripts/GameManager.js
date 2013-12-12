@@ -6,6 +6,18 @@ var score : GameObject;
 var objective : GameObject;
 var timer : GameObject;
 var totalTime : int = 120;
+var starting : boolean = false;
+var finishing : boolean = false;
+
+//you know games must have stars...
+var starOne : GameObject;
+var starTwo : GameObject;
+var starThree : GameObject;
+//just because... aliens!
+
+var textObjectives : GameObject;
+var title : GameObject;
+var title_shadow : GameObject;
 
 var currentObjective : String = "Universe";
 private var currentObjectiveIndex : int = 0;
@@ -15,22 +27,33 @@ var seconds : int;
 
 var stop : boolean = false;
 
-
-function Start () {
+function Awake() {
+  //HEY!!! WAKE UP... and initialize your objects!
+  starOne = GameObject.Find("StarOne");
+  starTwo = GameObject.Find("StarTwo");
+  starThree = GameObject.Find("StarThree");
+  
+  //only stars matters, but... someone must keep the other "things" under check
   score = GameObject.Find("Score");  
   objective = GameObject.Find("Objective");
   timer = GameObject.Find("Timer");
   
-  var index = Random.Range(0,objectiveList.length);
-  currentObjective = objectiveList[currentObjectiveIndex];
-  objective.guiText.text = currentObjective;
-  setTime();
+  //last but not least
+  textObjectives = GameObject.Find('Objectives');
+  title = GameObject.Find('Title');
+  title_shadow = GameObject.Find('Title-shadow');
+}
+function Start () {
+
+
+  //at first the game is paused while the user reads the instructions for the scene
+  stop  = true;
   
-  StartCoroutine("ChangeObjective");
-  StartCoroutine("ProcessTime");
- 
-  CreateTargets();
- 
+  //since the game hasn't started, it is not finishing...
+  finishing = false;
+  
+  //did I mention that the game is starting at the beginning?
+  starting = true;
 }
 
 function Update() {
@@ -42,6 +65,49 @@ function Update() {
     Time.timeScale = 1;
     
   
+}
+
+function OnGUI() {
+  if (starting) {
+  	if (GUI.Button(Rect(10,70,50,30),"Start!"))
+    StartGame();    
+  }
+  
+  if (finishing) {
+  	if (GUI.Button(Rect(10,70,50,30),"Restart!"))
+    StartGame();    
+  }
+  
+}
+    
+function StartGame() {
+
+  totalTime = 120;
+
+  //I know, I know, everyone wants to see the stars... but
+  //they must earn them!!
+  starOne.GetComponent(SpriteRenderer).enabled = false;
+  starTwo.GetComponent(SpriteRenderer).enabled = false;
+  starThree.GetComponent(SpriteRenderer).enabled = false;
+  
+  //you cheating bastards, you will start with a clean score, no matter what!
+  score.GetComponent(MainScore).score  = 0;
+  
+  var index = Random.Range(0,objectiveList.length);
+  currentObjective = objectiveList[currentObjectiveIndex];
+  objective.guiText.text = currentObjective;
+  setTime();
+  
+  //the game has started
+  starting = false;
+  
+  //it is not longer paused, let the mayhem begin
+  stop = false;
+  
+  StartCoroutine("ChangeObjective");
+  StartCoroutine("ProcessTime");
+
+  CreateTargets();
 }
 
 function ProcessEvent( points : int ) {   
@@ -112,7 +178,6 @@ function ProcessTime() {
   }
   else {
     setTime(); //one last time to show 00 as the remaining time
-    stop =  true;
     FinishGame();
   }
 }
@@ -144,9 +209,12 @@ function setTime() {
 }
 
 function FinishGame() {
-  var starOne : GameObject = GameObject.Find("StarOne");
-  var starTwo : GameObject = GameObject.Find("StarTwo");
-  var starThree : GameObject = GameObject.Find("StarThree");
+  
+  //ok, now the game is finishing;
+  finishing = true;
+  
+  //back to pausing it, to show some stuff to the player
+  stop =  true;
   
   var finalScore : int = score.GetComponent(MainScore).score;
   
@@ -169,6 +237,13 @@ function CreateTargets() {
   
   
   for ( var index : int = 0; index < objectiveList.length ; index++ ) {
+  	//cleaning up the house if it is not the first game
+  	//must move this code to its propper function, but I'm tired and...
+  	//the spaniard still talks to me.....
+    Destroy ( GameObject.Find(objectiveList[index] + "Text") );
+    Destroy ( GameObject.Find(objectiveList[index] + "Text-Shadow") );
+    //and talks... and talks
+    
     var tmpName : String = objectiveList[index].ToLower() + 'Creator';
         
     
@@ -185,9 +260,7 @@ function CreateTargets() {
 }
 
 function ShowTargets() {  
-  var textObjectives = GameObject.Find('Objectives');
-  var title = GameObject.Find('Title');
-  var title_shadow = GameObject.Find('Title-shadow');
+
   var y_pos : float = 0;
   var y_pos_shadow : float = -0.0025;
   var incremental : float = -0.04;

@@ -2916,6 +2916,14 @@ MonoBehaviour:
   objective: {fileID: 0}
   timer: {fileID: 0}
   totalTime: 120
+  starting: 0
+  finishing: 0
+  starOne: {fileID: 0}
+  starTwo: {fileID: 0}
+  starThree: {fileID: 0}
+  textObjectives: {fileID: 0}
+  title: {fileID: 0}
+  title_shadow: {fileID: 0}
   currentObjective: Swan
   minutes: 0
   seconds: 0
