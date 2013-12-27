@@ -46,9 +46,8 @@ function BombDetonation()
 function Explode()
 {
 	
-
 	// Make the pickup spawner start to deliver a new pickup.
-	pickupSpawner.StartCoroutine(pickupSpawner.DeliverPickup());
+	pickupSpawner.StartCoroutine(pickupSpawner.Spawn());
 
 	controlCenter.GetComponent(GameManager).SendMessage("ProcessBomb");
  	
@@ -64,4 +63,5 @@ function Explode()
 
 	// Destroy the bomb.
 	Destroy (gameObject);
+	
 }

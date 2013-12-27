@@ -1,11 +1,12 @@
 ﻿#pragma strict
 
+var buttonX : float;
+var buttonY : float;
+
 var objectiveList : String[];
 var targets : int[];
-var score : GameObject;
-var objective : GameObject;
-var timer : GameObject;
-var totalTime : int = 120;
+var startingTime : int = 120;
+private var totalTime : int;
 var starting : boolean = false;
 var finishing : boolean = false;
 
@@ -15,9 +16,21 @@ var starTwo : GameObject;
 var starThree : GameObject;
 //just because... aliens!
 
+var bombSpawner : GameObject;
+var specialItemsSpawner : GameObject;
+
 var textObjectives : GameObject;
 var title : GameObject;
 var title_shadow : GameObject;
+var score : GameObject;
+var objective : GameObject;
+var objectiveShadow : GameObject;
+
+var timer : GameObject;
+var timerShadow : GameObject;
+
+var endMessage : GameObject;
+var endMessageShadow : GameObject;
 
 var currentObjective : String = "Universe";
 private var currentObjectiveIndex : int = 0;
@@ -27,22 +40,39 @@ var seconds : int;
 
 var stop : boolean = false;
 
+var oneStarScore : int = 0;
+var twoStarScore : int = 0;
+var threeStarScore : int = 0;
+
+var twoStarCoef : float = 2.5;
+var threeStarCoef : float = 3.5;
+
 function Awake() {
   //HEY!!! WAKE UP... and initialize your objects!
   starOne = GameObject.Find("StarOne");
   starTwo = GameObject.Find("StarTwo");
   starThree = GameObject.Find("StarThree");
   
+  bombSpawner = GameObject.Find("pickupManager");
+  specialItemsSpawner = GameObject.Find("specialItemsManager");
+  
   //only stars matters, but... someone must keep the other "things" under check
   score = GameObject.Find("Score");  
   objective = GameObject.Find("Objective");
+  objectiveShadow = GameObject.Find("Objective-shadow");
   timer = GameObject.Find("Timer");
+  endMessage = GameObject.Find("EndMessage");
+  endMessageShadow = GameObject.Find("EndMessage-shadow");
   
   //last but not least
   textObjectives = GameObject.Find('Objectives');
   title = GameObject.Find('Title');
   title_shadow = GameObject.Find('Title-shadow');
+  
+  buttonX = Screen.width / 2 - 100;
+  buttonY = Screen.height / 2 - 50;
 }
+
 function Start () {
 
 
@@ -68,27 +98,43 @@ function Update() {
 }
 
 function OnGUI() {
+  
   if (starting) {
-  	if (GUI.Button(Rect(10,70,50,30),"Start!"))
+  	if (GUI.Button(Rect(buttonX, buttonY ,200,100),"Start!"))
     StartGame();    
   }
   
   if (finishing) {
-  	if (GUI.Button(Rect(10,70,50,30),"Restart!"))
-    StartGame();    
+    if ( WinEvaluator() ) {
+      if (GUI.Button(Rect(buttonX, buttonY + 120 ,200,100),"Restart!"))
+      StartGame();    
+    }
+    else {
+      if (GUI.Button(Rect(buttonX, buttonY + 120 ,200,100),"Restart!"))
+      StartGame();    
+    }
+  	
   }
   
 }
     
 function StartGame() {
 
-  totalTime = 120;
-
+  //starting time will be used to set the timer for the first time.
+  totalTime = startingTime;
+  oneStarScore = 0;
   //I know, I know, everyone wants to see the stars... but
   //they must earn them!!
   starOne.GetComponent(SpriteRenderer).enabled = false;
   starTwo.GetComponent(SpriteRenderer).enabled = false;
   starThree.GetComponent(SpriteRenderer).enabled = false;
+  
+  //I have to hide the win/loose message too
+  endMessage.guiText.enabled = false;
+  endMessageShadow.guiText.enabled = false;
+  
+  bombSpawner.GetComponent(PickupSpawner).StartCoroutine("Spawn");
+  specialItemsSpawner.GetComponent(SpecialItemsSpawner).StartCoroutine("Spawn");
   
   //you cheating bastards, you will start with a clean score, no matter what!
   score.GetComponent(MainScore).score  = 0;
@@ -101,21 +147,35 @@ function StartGame() {
   //the game has started
   starting = false;
   
+  //so it is not finishing...
+  finishing = false;
+  
   //it is not longer paused, let the mayhem begin
   stop = false;
+    
+  objective.guiText.enabled = true;
+  objectiveShadow.guiText.enabled = true;
   
+  
+  //this will be changing the objective to find on screen in random intervals of time
   StartCoroutine("ChangeObjective");
+  
+  //this will be changing the total time left
   StartCoroutine("ProcessTime");
 
+  //this will calculate how many objectives will be needed to clear the level.
   CreateTargets();
 }
 
 function ProcessEvent( points : int ) {   
+  //this function adds to the current score what it is passed to it, ... avoid cheating please!
   score.GetComponent(MainScore).score = score.GetComponent(MainScore).score + points;  
 }
 
 function ProcessObjective (objective : String ) {
-  
+  //this function searches in the list of objectives for the one named the same as the recieved parameter
+  //if there is one, and the number of targets left is greater than 0 it substracts 1 from it and refresh the
+  //GUI objects that refers to this particular objective
   for ( var index : int = 0; index < objectiveList.length ; index++ ) {
     //When I get the targeted item    
     if ( objective == objectiveList[index] && targets[index] > 0 ) {
@@ -129,37 +189,68 @@ function ProcessObjective (objective : String ) {
   }
 }
 
+function ProcessSpecial() {
+  //SpecialItems uses special Assistants... that must be destroyed with them.
+  var assitants : GameObject[] = GameObject.FindGameObjectsWithTag("Assistants");
+  for( var go : GameObject in assitants) {
+  	Destroy(go);
+  }
+  specialItemsSpawner.GetComponent(SpecialItemsSpawner).SendMessage("ToggleExists");  
+  specialItemsSpawner.GetComponent(SpecialItemsSpawner).StartCoroutine("Spawn");
+}
+
+function ProcessClock() {
+  totalTime += 15.0;
+  specialItemsSpawner.GetComponent(SpecialItemsSpawner).SendMessage("ToggleExists");  
+  specialItemsSpawner.GetComponent(SpecialItemsSpawner).StartCoroutine("Spawn");
+}
+
 function ProcessBomb() {
-  // Find all the colliders on the Enemies layer within the bombRadius.
+  // Find all the gameObjects on the level with the tag Enemy
   var enemies : GameObject[] = GameObject.FindGameObjectsWithTag("Enemy");
 
-  // For each collider...	
+  // For each one of those...	
   for( var go : GameObject in enemies) {
+    //get their names
     var currentName : String = go.GetComponent(ActionObjectMetaData).currentName;
+    //get their points
     var points : int = go.GetComponent(ActionObjectMetaData).points;
+    //add the points to the score
     ProcessEvent(points);
+    //substract one from the remaining objectives
     ProcessObjective(currentName);
+    //destroy the object... it's no longer needed
     Destroy(go);
   }	
+  //specialItemsSpawner.GetComponent(SpecialItemsSpawner).SendMessage("ToggleExists"); 
+  bombSpawner.GetComponent(PickupSpawner).SendMessage("ToggleExists");
 }
 
 function ChangeObjective() {
+
   // Create a random wait time before the prop is instantiated.
   var waitTime : float = Random.Range(2, 8);
   
   var index : int = -1;
+  
   // Wait for the designated period.
   yield new WaitForSeconds(waitTime);
   
   index = Random.Range(0,objectiveList.length);
     
+  //in the remote chance that the index was the same as the previous time
+  //try it again. Be carefull with this, if the objective list contains only one element...
+  //this will loop for ever...
   while ( index == currentObjectiveIndex) {
     index = Random.Range(0,objectiveList.length);
   }
   
+  //stores the new index only to check it next time
   currentObjectiveIndex = index;
   
+  //gets the new objectives name
   currentObjective = objectiveList[currentObjectiveIndex];
+  //show it on screen
   objective.guiText.text = currentObjective;
   
   // Restart the coroutine
@@ -216,21 +307,55 @@ function FinishGame() {
   //back to pausing it, to show some stuff to the player
   stop =  true;
   
+  CleanStage();
+  
   var finalScore : int = score.GetComponent(MainScore).score;
   
-  if ( finalScore > 100 ) {
+  if ( WinEvaluator() ) {   
+    ShowWin( finalScore );
+  }
+  else {
+    ShowLost();	  
+  }
+}
+
+function WinEvaluator () {
+  //this will search the objectives and targets arrays, if there is even
+  //one element left on the targets the player looses, else he/she/it wins
+  
+  //lets start thinking possitively
+  var win : boolean = true;  
+  for ( var index : int = 0; index < objectiveList.length ; index++ ) {
+    //When I get the targeted item    
+    if ( targets[index] > 0 ) {
+      win = false;
+    }
+  }
+  
+  return win;
+}
+
+function ShowWin( finalScore : int ) {
+  endMessage.guiText.text = "You Win!";
+  endMessage.guiText.enabled = true;
+  endMessageShadow.guiText.enabled = true;
+  if ( finalScore > oneStarScore ) {
     starOne.GetComponent(SpriteRenderer).enabled = true;
   }
-  
-  if ( finalScore > 500 ) {
+
+  if ( finalScore > twoStarScore ) {
     starTwo.GetComponent(SpriteRenderer).enabled = true;
   }
-  
-  if ( finalScore > 1000 ) {
+
+  if ( finalScore > threeStarScore ) {
     starThree.GetComponent(SpriteRenderer).enabled = true;
-  }
-  
-  
+  }	  
+}
+
+function ShowLost() {
+  endMessage.guiText.text = "You Loose!";
+  endMessage.guiText.enabled = true;
+  endMessageShadow.guiText.enabled = true;
 }
 
 function CreateTargets() {
@@ -244,17 +369,23 @@ function CreateTargets() {
     Destroy ( GameObject.Find(objectiveList[index] + "Text-Shadow") );
     //and talks... and talks
     
-    var tmpName : String = objectiveList[index].ToLower() + 'Creator';
-        
+    var tempScore : int = 0; //will calculate the minimum score adding the score of each target
     
+    var tmpName : String = objectiveList[index].ToLower() + 'Creator';
+            
     var creator = GameObject.Find(tmpName);
     
     var maxRange = creator.GetComponent(Spawner).maxTimeBetweenSpawns + 2;
     var targetAmount = totalTime / maxRange;
     
     targets[index] = targetAmount;       
-          
+    
+    tempScore = creator.GetComponent(Spawner).backgroundProp.gameObject.GetComponent(ActionObjectMetaData).points;    
+    oneStarScore += tempScore * targetAmount;
   }
+  
+  twoStarScore = oneStarScore * twoStarCoef;
+  threeStarScore = oneStarScore * threeStarCoef;
   
   ShowTargets();
 }
@@ -292,5 +423,47 @@ function ShowTargets() {
 	go_shadow.transform.localPosition = new Vector3(0.02, y_pos_shadow, -1);
 
     
+  }
+}
+
+function CleanStage() {
+
+  objective.guiText.text = "";
+  objective.guiText.enabled = false;
+  objectiveShadow.guiText.enabled = false;
+  
+  
+  // Find all the thingies in the screen to wipe clean
+  var enemies : GameObject[] = GameObject.FindGameObjectsWithTag("Enemy");
+
+  // For each one of those thingies...	
+  for( var go : GameObject in enemies) {
+  	Destroy(go);
+  }
+  
+  //now lets check if there is an spaceShip around
+  var specialItems : GameObject[] = GameObject.FindGameObjectsWithTag("SpecialItems");
+  for( var go : GameObject in specialItems) {
+  	Destroy(go); //only to destroy it... man we are evil!!
+  	specialItemsSpawner.GetComponent(SpecialItemsSpawner).SendMessage("ToggleExists");
+  }
+   
+  //what about bombs in the air?
+  var airCrates : GameObject[] = GameObject.FindGameObjectsWithTag("Crate");
+  for( var go : GameObject in airCrates) {
+  	Destroy(go);
+  }
+  
+  //what about bombs in the ground?
+  var crates : GameObject[] = GameObject.FindGameObjectsWithTag("BombPickup");
+  for( var go : GameObject in crates) {
+   	Destroy(go);
+   	bombSpawner.GetComponent(PickupSpawner).SendMessage("ToggleExists");
+  }
+  
+  //wipe the temporal Assistants too.
+  var assitants : GameObject[] = GameObject.FindGameObjectsWithTag("Assistants");
+  for( var go : GameObject in assitants) {
+  	Destroy(go);
   }
 }

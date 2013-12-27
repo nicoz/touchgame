@@ -12,6 +12,9 @@ TagManager:
   - BombPickup
   - ExplosionFX
   - HealthBar
+  - SpaceShip
+  - Assistants
+  - SpecialItems
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

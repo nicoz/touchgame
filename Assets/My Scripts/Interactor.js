@@ -1,6 +1,8 @@
 ﻿#pragma strict
 
 var score : GameObject;
+var specialItems : String[];
+
 private var currentName : String;
 private var points : int;
 private var controlCenter : GameObject;
@@ -18,9 +20,16 @@ function OnMouseDown() {
     
   if (stop) return; //if the game is stopped there is no reason to keep checking the mouse down event
   
-  if ( currentName ==  controlCenter.GetComponent(GameManager).currentObjective ) { // add points if it is a correct click
+  var isSpecial : boolean = IsSpecialItem(currentName);
+  
+  if ( currentName ==  controlCenter.GetComponent(GameManager).currentObjective ||  isSpecial) { // add points if it is a correct click
     controlCenter.GetComponent(GameManager).SendMessage("ProcessEvent", points);
-    controlCenter.GetComponent(GameManager).SendMessage("ProcessObjective", currentName);
+    if (isSpecial) {
+      controlCenter.GetComponent(GameManager).SendMessage("ProcessSpecial");
+    } else {
+      controlCenter.GetComponent(GameManager).SendMessage("ProcessObjective", currentName);
+    }
+    
   }
   else { // rest points as a penalty
   	//controlCenter.GetComponent(GameManager).SendMessage("ProcessEvent", points * -1 / 3 );
@@ -28,4 +37,14 @@ function OnMouseDown() {
   
   
   Destroy(gameObject);
+}
+
+function IsSpecialItem( name : String) {
+  var itIs : boolean = false;
+  
+  for( var item : String in specialItems) {    
+    if (name == item) itIs = true;
+  }
+
+  return itIs;
 }

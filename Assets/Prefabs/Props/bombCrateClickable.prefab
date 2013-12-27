@@ -12,7 +12,7 @@ GameObject:
   - 50: {fileID: 5000000}
   m_Layer: 11
   m_Name: bombCrateClickable
-  m_TagString: Untagged
+  m_TagString: Crate
   m_Icon: {fileID: -1376725286, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
