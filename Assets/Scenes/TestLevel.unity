@@ -609,7 +609,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 547595956}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .839999974, y: .899999976, z: -1}
+  m_LocalPosition: {x: .839999974, y: .879999995, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 970299954}
@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b81d4fbf29a4124b6071323890ac82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guiCopy: {fileID: 335855067}
+  guiCopy: {fileID: 2060219046}
 --- !u!1 &641741875
 GameObject:
   m_ObjectHideFlags: 0
@@ -2135,7 +2135,7 @@ GUIText:
   m_TabSize: 4
   m_Font: {fileID: 12800000, guid: 59a5800f69f764272a193320f2b229b2, type: 3}
   m_Material: {fileID: 0}
-  m_FontSize: 40
+  m_FontSize: 60
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
@@ -2238,7 +2238,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 983741512}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 83d106ac4cae18d4a87c7c0dcea8cdaa, type: 3}
   m_PlayOnAwake: 1
@@ -2972,7 +2972,7 @@ GUIText:
   m_TabSize: 4
   m_Font: {fileID: 12800000, guid: 59a5800f69f764272a193320f2b229b2, type: 3}
   m_Material: {fileID: 0}
-  m_FontSize: 40
+  m_FontSize: 60
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
@@ -3039,6 +3039,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1786653277}
   - 114: {fileID: 1786653278}
+  - 114: {fileID: 1786653279}
+  - 114: {fileID: 1786653280}
   m_Layer: 0
   m_Name: ControlCenter
   m_TagString: Untagged
@@ -3068,8 +3070,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73b0da114c581f34a9f9662087082d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonX: 0
-  buttonY: 0
   objectiveList:
   - Swan
   - Bus
@@ -3102,6 +3102,111 @@ MonoBehaviour:
   threeStarScore: 0
   twoStarCoef: 2.5
   threeStarCoef: 3.5
+--- !u!114 &1786653279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1786653276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b74a16dcddf83fc4987e6611230ef9dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdingKey: 0
+  go: {fileID: 0}
+  moving: 0
+--- !u!114 &1786653280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1786653276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c389f24c177ceb744801bcaa6e6e4716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalWidth: 1920
+  originalHeight: 1080
+  originalNormalText: 48
+  originalGUIStyle:
+    m_Name: 
+    m_Normal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Hover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Active:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Focused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Font: {fileID: 0}
+    m_FontSize: 0
+    m_FontStyle: 0
+    m_Alignment: 0
+    m_WordWrap: 0
+    m_RichText: 1
+    m_TextClipping: 0
+    m_ImagePosition: 0
+    m_ContentOffset: {x: 0, y: 0}
+    m_FixedWidth: 0
+    m_FixedHeight: 0
+    m_StretchWidth: 1
+    m_StretchHeight: 0
+  originalScoreText: 0
+  originalTimerText: 0
+  originalObjectiveText: 0
+  originalEndMessageText: 0
+  originalTitleText: 0
+  buttonX: 0
+  buttonY: 0
+  controlCenter: {fileID: 0}
+  score: {fileID: 0}
+  score_shadow: {fileID: 0}
+  timer: {fileID: 0}
+  timer_shadow: {fileID: 0}
+  objective: {fileID: 0}
+  objective_shadow: {fileID: 0}
+  endMessage: {fileID: 0}
+  endMessage_shadow: {fileID: 0}
+  title: {fileID: 0}
+  title_shadow: {fileID: 0}
 --- !u!1 &1866562670
 GameObject:
   m_ObjectHideFlags: 0
@@ -3255,7 +3360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b81d4fbf29a4124b6071323890ac82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guiCopy: {fileID: 2060219046}
+  guiCopy: {fileID: 335855067}
 --- !u!132 &1952560357
 GUIText:
   m_ObjectHideFlags: 0

@@ -2,12 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\My Scripts\GameManager.js">
     <Files>
-      <File FileName="Assets\My Scripts\TrajectoryChanger.js" Line="71" Column="7" />
-      <File FileName="Assets\My Scripts\GameManager.js" Line="199" Column="45" />
-      <File FileName="Assets\My Scripts\SpecialItemsSpawner.js" Line="44" Column="2" />
-      <File FileName="Assets\My Scripts\Spawner.js" Line="41" Column="110" />
-      <File FileName="Assets\My Scripts\PickupSpawner.js" Line="38" Column="19" />
-      <File FileName="Assets\My Scripts\SpecialItemsPickup.js" Line="42" Column="4" />
+      <File FileName="Assets\My Scripts\GUIManager.js" Line="89" Column="83" />
+      <File FileName="Assets\My Scripts\GameManager.js" Line="409" Column="48" />
+      <File FileName="Assets\Scripts\ScoreShadow.cs" Line="22" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

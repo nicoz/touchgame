@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-var buttonX : float;
-var buttonY : float;
 
 var objectiveList : String[];
 var targets : int[];
@@ -47,6 +45,7 @@ var threeStarScore : int = 0;
 var twoStarCoef : float = 2.5;
 var threeStarCoef : float = 3.5;
 
+
 function Awake() {
   //HEY!!! WAKE UP... and initialize your objects!
   starOne = GameObject.Find("StarOne");
@@ -69,8 +68,7 @@ function Awake() {
   title = GameObject.Find('Title');
   title_shadow = GameObject.Find('Title-shadow');
   
-  buttonX = Screen.width / 2 - 100;
-  buttonY = Screen.height / 2 - 50;
+ 
 }
 
 function Start () {
@@ -93,28 +91,12 @@ function Update() {
     
   else
     Time.timeScale = 1;
-    
-  
+ 
 }
+
 
 function OnGUI() {
   
-  if (starting) {
-  	if (GUI.Button(Rect(buttonX, buttonY ,200,100),"Start!"))
-    StartGame();    
-  }
-  
-  if (finishing) {
-    if ( WinEvaluator() ) {
-      if (GUI.Button(Rect(buttonX, buttonY + 120 ,200,100),"Restart!"))
-      StartGame();    
-    }
-    else {
-      if (GUI.Button(Rect(buttonX, buttonY + 120 ,200,100),"Restart!"))
-      StartGame();    
-    }
-  	
-  }
   
 }
     
@@ -391,10 +373,15 @@ function CreateTargets() {
 }
 
 function ShowTargets() {  
-
-  var y_pos : float = 0;
-  var y_pos_shadow : float = -0.0025;
-  var incremental : float = -0.04;
+  var scale: Vector3;
+  var originalWidth : float = 1920.0;  // define here the original resolution
+  var originalHeight  : float = 1080.0; // you used to create the GUI contents
+  scale.x = Screen.width/originalWidth; // calculate hor scale
+  scale.y = Screen.height/originalHeight; // calculate vert scale
+  var fontMultiplier = Mathf.Sqrt((scale.x  * scale.x )  + (scale.y  * scale.y ));
+  var y_pos : float = -0.02;
+  var y_pos_shadow : float = -0.0225;
+  var incremental : float = -0.06;
   
   for ( var index : int = 0; index < objectiveList.length ; index++ ) {
     y_pos += incremental;
@@ -406,21 +393,25 @@ function ShowTargets() {
 
 	var go = new GameObject(tmpName + "Text", GUIText);
 	go.guiText.font = title.guiText.font;
-	go.guiText.fontSize = title.guiText.fontSize;
+	//go.guiText.fontSize = title.guiText.fontSize;
+	go.guiText.fontSize = 45;
+	go.guiText.fontSize = go.guiText.fontSize * fontMultiplier;
 	go.guiText.text = tmpName + ' - ' + targetAmount;
 	
 	go.transform.parent = textObjectives.transform;
-	go.transform.localPosition = new Vector3(0.02, y_pos, -1);
+	go.transform.localPosition = new Vector3(-0.03, y_pos, -1);
 	
 	//now the shadow
 	var go_shadow = new GameObject(tmpName + "Text-Shadow", GUIText);
 	go_shadow.guiText.font = title_shadow.guiText.font;
-	go_shadow.guiText.fontSize = title_shadow.guiText.fontSize;
+	//go_shadow.guiText.fontSize = title_shadow.guiText.fontSize;
+	go_shadow.guiText.fontSize = 45;
+	go_shadow.guiText.fontSize = go_shadow.guiText.fontSize * fontMultiplier;
 	go_shadow.guiText.color = title_shadow.guiText.color;
 	go_shadow.guiText.text = tmpName + ' - ' + targetAmount;
 	
 	go_shadow.transform.parent = textObjectives.transform;
-	go_shadow.transform.localPosition = new Vector3(0.02, y_pos_shadow, -1);
+	go_shadow.transform.localPosition = new Vector3(-0.03, y_pos_shadow, -1);
 
     
   }

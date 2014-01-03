@@ -2,11 +2,15 @@
 
 var score : GameObject;
 var specialItems : String[];
+var go: GameObject;
+var moving: boolean = false;
 
 private var currentName : String;
 private var points : int;
 private var controlCenter : GameObject;
 private var stop : boolean = false;
+private var holdingKey : boolean = false;
+
 
 function Start() {
   currentName = this.GetComponent(ActionObjectMetaData).currentName;
@@ -14,11 +18,21 @@ function Start() {
   controlCenter = GameObject.Find("ControlCenter");
 }
 
-function OnMouseDown() {  
-  
+function Update() {
+
   stop = controlCenter.GetComponent(GameManager).stop;
     
   if (stop) return; //if the game is stopped there is no reason to keep checking the mouse down event
+ 
+}
+
+function ToggleHolding() {
+	holdingKey = !holdingKey;
+}
+
+function OnPressEvent() {  
+  
+  
   
   var isSpecial : boolean = IsSpecialItem(currentName);
   
@@ -36,7 +50,7 @@ function OnMouseDown() {
   }
   
   
-  Destroy(gameObject);
+  Destroy(this.gameObject);
 }
 
 function IsSpecialItem( name : String) {
