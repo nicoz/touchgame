@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 95: {fileID: 9500000}
   - 50: {fileID: 5000000}
+  - 114: {fileID: 11400000}
   m_Layer: 11
   m_Name: bombCrateClickable
   m_TagString: Crate
@@ -139,6 +140,19 @@ Animator:
   m_ApplyRootMotion: 0
   m_AnimatePhysics: 1
   m_HasTransformHierarchy: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dcb19800fe3fd848a6baf05d7aa7dc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupClip: {fileID: 0}
+  specialItemsSpawner: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupClip: {fileID: 8300000, guid: 986fa1b8984964da79d1be0597332fb2, type: 3}
+  specialItemsSpawner: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -168,6 +183,7 @@ MonoBehaviour:
   fuse: {fileID: 8300000, guid: 238da4efc08184aee919af254edb2ef1, type: 3}
   fuseTime: 1.5
   explosion: {fileID: 100000, guid: 9c8b546f746e74328ab6b8bba733af67, type: 2}
+  specialItemsSpawner: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -1,7 +1,8 @@
 ﻿#pragma strict
 
 var pickups : GameObject[];				// Array of pickup prefabs with the bomb pickup first and health second.
-var pickupDeliveryTime : float = 45.0;		// Delay on delivery.
+var pickupDeliveryTime : float = 45.0;		//  Wait till delivery starts
+var minimumWaitTime : float = 15.0;         //  Delay on delivery.
 var dropRangeLeft : float;					// Smallest value of x in world coordinates the delivery can happen at.
 var dropRangeRight : float;				// Largest value of x in world coordinates the delivery can happen at.
 var exists : boolean = false;
@@ -20,8 +21,9 @@ function Start ()
 function Spawn()
 {
   // Wait for the delivery delay.
-  var wait : float = Random.Range(0, pickupDeliveryTime);
-	
+  var wait : float = Random.Range(minimumWaitTime, pickupDeliveryTime);
+  
+  Debug.Log("Tiempo de espera bomba o tiempo: " + wait);
   yield new WaitForSeconds(wait);
 
   // Create a random x coordinate for the delivery in the drop range.

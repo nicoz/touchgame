@@ -9,6 +9,8 @@ function Start () {
 }
 
 function Update () {
+  
+   
    if ( holdingKey && Input.GetAxisRaw("Press") == 0 && Input.touchCount == 0 ) {
       moving = false;
       holdingKey = false;
@@ -16,40 +18,42 @@ function Update () {
   }
   
   if (!holdingKey && (Input.GetAxisRaw("Press") != 0.0 || Input.touchCount > 0) ) {
-    holdingKey = true;
-    //Debug.Log("--------------Screen Touch-----------");
+    holdingKey = true;    
     var ray : Vector3;
+    var position : Vector3;
+    var hitTouch : RaycastHit2D;
     if (Input.GetAxisRaw("Press") != 0.0) { 
-      //Debug.Log("--------------Mouse Touch-----------");
-      var mousePosition: Vector3 = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1.0));
-      //ray = GameObject.Find("mainCamera").ScreenPointToRay(Input.GetAxisRaw("Press").position);
-      var hit : RaycastHit2D = new RaycastHit2D();
-      moving = Physics2D.Raycast (mousePosition, -Vector2.up);
-      hit = Physics2D.Raycast (mousePosition, -Vector2.up);
-      //Debug.Log(-Vector2.up);
+      //Debug.Log("--------------Mouse Touched-----------");      
+      position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1.0));
+      hitTouch = new RaycastHit2D();
+      moving = Physics2D.Raycast (position, -Vector2.up, 0.01);
+      hitTouch = Physics2D.Raycast (position, -Vector2.up, 0.01);
       
-        if(moving) {
-         go = hit.transform.gameObject;
-         //Debug.Log("Touch Detected on: "+this);
-         if (go.GetComponent(Interactor))
-           go.GetComponent(Interactor).OnPressEvent();
-       }
-             
-    }
-    if (Input.touchCount > 0) {
-      Debug.Log("---------------ACA NO!!-------------");
-      var position: Vector3 = Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 1.0));
-      var hitTouch : RaycastHit2D = new RaycastHit2D();
-      moving = Physics2D.Raycast (position, -Vector2.up);
-      hitTouch = Physics2D.Raycast (position, -Vector2.up);
-      Debug.Log(-Vector2.up);
       
       if(moving) {
-        go = hitTouch.transform.gameObject;
-        Debug.Log("Touch Detected on: "+this);
+        go = hitTouch.transform.gameObject;      
+        if (go.GetComponent(Interactor) != null) go.GetComponent(Interactor).OnPressEvent();
+        
+        if (go.GetComponent(SpecialItemsPickup) != null) go.GetComponent(SpecialItemsPickup).ExecuteAction();
+        
+        if (go.GetComponent(BombPickup) != null) go.GetComponent(BombPickup).ExecuteAction();
+        
+      }
+    }
+    if (Input.touchCount > 0) {
+      //Debug.Log("---------------Screen Touched-------------");
+      position = Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 1.0));
+      hitTouch = new RaycastHit2D();
+      moving = Physics2D.Raycast (position, -Vector2.up, 0.01);
+      hitTouch = Physics2D.Raycast (position, -Vector2.up, 0.01);
+      
+      
+      if(moving) {
+        go = hitTouch.transform.gameObject;      
         go.GetComponent(Interactor).OnPressEvent();
       }
     }
-  }  
-
+  }
+    
+  
 }

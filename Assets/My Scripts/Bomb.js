@@ -8,7 +8,8 @@ var fuseTime : float = 1.5;
 var explosion : GameObject;			// Prefab of explosion effect.
 
 
-private var pickupSpawner : PickupSpawner;	// Reference to the PickupSpawner script.
+//private var pickupSpawner : PickupSpawner;	// Reference to the PickupSpawner script.
+var specialItemsSpawner : SpecialItemsSpawner; //reference to the bombs spawner, neeed it to respawn the bomb if it fades
 private var explosionFX : ParticleSystem;		// Reference to the particle system of the explosion effect.
 private var controlCenter : GameObject;
 
@@ -16,7 +17,8 @@ function Awake ()
 {
 	// Setting up references.
 	explosionFX = GameObject.FindGameObjectWithTag("ExplosionFX").GetComponent(ParticleSystem);
-	pickupSpawner = GameObject.Find("pickupManager").GetComponent(PickupSpawner);	
+	//pickupSpawner = GameObject.Find("pickupManager").GetComponent(PickupSpawner);	
+	specialItemsSpawner = GameObject.Find("specialItemsManager").GetComponent(SpecialItemsSpawner);
 	controlCenter = GameObject.Find("ControlCenter");
 	
 }
@@ -47,8 +49,9 @@ function Explode()
 {
 	
 	// Make the pickup spawner start to deliver a new pickup.
-	pickupSpawner.StartCoroutine(pickupSpawner.Spawn());
-
+	//pickupSpawner.StartCoroutine(pickupSpawner.Spawn());
+    specialItemsSpawner.StartCoroutine(specialItemsSpawner.Spawn());
+    
 	controlCenter.GetComponent(GameManager).SendMessage("ProcessBomb");
  	
 	// Set the explosion effect's position to the bomb's position and play the particle system.

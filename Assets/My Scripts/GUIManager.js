@@ -7,6 +7,7 @@ var originalTimerText : float;
 var originalObjectiveText : float;
 var originalEndMessageText : float;
 var originalTitleText : float;
+var originalInstructionsText : float;
 
 var buttonX : float;
 var buttonY : float;
@@ -28,6 +29,14 @@ var endMessage_shadow : GameObject;
 var title : GameObject;
 var title_shadow : GameObject;
 
+var instructions : GameObject;
+
+var swanText : GameObject;
+var cabText : GameObject;
+var busText : GameObject;
+var bombText : GameObject;
+var clockText : GameObject;
+var shipText : GameObject;
 
 private var scale: Vector3;
 
@@ -58,7 +67,17 @@ function Awake() {
   
   title = GameObject.Find('Title');
   title_shadow = GameObject.Find('Title-shadow');   
-    
+  
+  instructions = GameObject.Find("Instructions");
+  
+  swanText = GameObject.Find("SwanText");
+  cabText = GameObject.Find("CabText");
+  busText = GameObject.Find("BusText");
+  shipText = GameObject.Find("ShipText");
+  bombText = GameObject.Find("BombText");
+  clockText = GameObject.Find("ClockText");
+  
+  originalInstructionsText = swanText.guiText.fontSize;
   originalTitleText = title.guiText.fontSize;
 } 
 
@@ -103,20 +122,30 @@ function OnGUI(){
   title.guiText.fontSize = originalTitleText * fontMultiplier;   
   title_shadow.guiText.fontSize = originalTitleText * fontMultiplier;
   
+  instructions.guiText.fontSize = originalTitleText * fontMultiplier;   
   
+  swanText.guiText.fontSize = originalInstructionsText * fontMultiplier; 
+  cabText.guiText.fontSize = originalInstructionsText * fontMultiplier; 
+  busText.guiText.fontSize = originalInstructionsText * fontMultiplier; 
+  shipText.guiText.fontSize = originalInstructionsText * fontMultiplier; 
+  bombText.guiText.fontSize = originalInstructionsText * fontMultiplier; 
+  clockText.guiText.fontSize = originalInstructionsText * fontMultiplier; 
   
+  var restartY : int = 670;
+  var startY : int = 800;
+  var startX : int = buttonX + 200;
   if (controlCenter.GetComponent(GameManager).starting) {
-  	if (GUI.Button(Rect(buttonX, buttonY ,200,100),"Start!"))
+  	if (GUI.Button(Rect(startX, startY ,200,100),"Start!"))
     controlCenter.GetComponent(GameManager).StartGame();    
   }
   
   if (controlCenter.GetComponent(GameManager).finishing) {
     if ( controlCenter.GetComponent(GameManager).WinEvaluator() ) {
-      if (GUI.Button(Rect(buttonX, buttonY + (190 * scale.y),200,100),"Restart!"))
+      if (GUI.Button(Rect(buttonX, restartY,200,100),"Restart!"))
       controlCenter.GetComponent(GameManager).StartGame();    
     }
     else {
-      if (GUI.Button(Rect(buttonX, buttonY + (190 * scale.y),200,100),"Restart!"))
+      if (GUI.Button(Rect(buttonX, restartY,200,100),"Restart!"))
       controlCenter.GetComponent(GameManager).StartGame();    
     }
   	

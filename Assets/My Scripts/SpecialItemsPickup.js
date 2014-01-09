@@ -36,15 +36,25 @@ function OnTriggerEnter2D (other : Collider2D)
 	}
 }
 
-function OnMouseDown() {
+function ExecuteAction() {
+    /*
 	if (!landed)
 	  return;
-	  
+	*/
+	var child : GameObject;
+	if ( gameObject.name != "health" ) {
+	  anim.SetTrigger("Land");
+	  child = gameObject.Find("health");	  	  
+	}
+		
 	controlCenter.GetComponent(GameManager).SendMessage("ProcessClock");
 	
+	Destroy(child);
 	Destroy (gameObject);
 
 }
+
+
 
 function Fade() {
   yield new WaitForSeconds(5.0);

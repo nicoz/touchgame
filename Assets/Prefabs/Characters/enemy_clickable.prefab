@@ -94,8 +94,8 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Radius: .5
-  m_Center: {x: 0, y: .300000012}
+  m_Radius: .699999988
+  m_Center: {x: -.100000001, y: .300000012}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,6 +142,9 @@ MonoBehaviour:
   score: {fileID: 0}
   specialItems:
   - Space Ship
+  go: {fileID: 0}
+  holdingKey: 0
+  moving: 0
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1

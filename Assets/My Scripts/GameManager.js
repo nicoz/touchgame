@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+var objectiveMinimumTime : int = 2;
+var objectiveMaximumTime : int = 8;
 
 var objectiveList : String[];
 var targets : int[];
@@ -42,9 +44,10 @@ var oneStarScore : int = 0;
 var twoStarScore : int = 0;
 var threeStarScore : int = 0;
 
-var twoStarCoef : float = 2.5;
-var threeStarCoef : float = 3.5;
+var twoStarCoef : float = 1.5;
+var threeStarCoef : float = 2.5;
 
+var musicPlayer : GameObject;
 
 function Awake() {
   //HEY!!! WAKE UP... and initialize your objects!
@@ -68,7 +71,10 @@ function Awake() {
   title = GameObject.Find('Title');
   title_shadow = GameObject.Find('Title-shadow');
   
- 
+  
+  musicPlayer = GameObject.Find("music");
+  
+  EvaluateAds();
 }
 
 function Start () {
@@ -85,6 +91,13 @@ function Start () {
 }
 
 function Update() {
+
+  if (Input.GetKey(KeyCode.Escape)) {
+    Debug.Log("Escaping");
+    
+    Application.Quit();
+  }
+  
   if(stop)
     Time.timeScale = 0; // pauses the current scene
     
@@ -95,13 +108,44 @@ function Update() {
 }
 
 
-function OnGUI() {
+
+function EvaluateAds() {
+  #if UNITY_EDITOR
+    //Debug.Log("Unity Editor");
+    GameObject.Find("AdMobPlugin").SetActive(false);
+  #endif
   
+  #if UNITY_WEBPLAYER
+    //Debug.Log("Web Player");
+    //GameObject.Find("AdMobPlugin").SetActive(false);
+  #endif
   
+  #if UNITY_ANDROID
+    //Debug.Log("ANDROID");
+  #endif
+
+  #if UNITY_IPHONE
+    //Debug.Log("Iphone");
+  #endif
+
+  #if UNITY_STANDALONE_OSX
+    //Debug.Log("Stand Alone OSX");
+    GameObject.Find("AdMobPlugin").SetActive(false);
+  #endif
+
+  #if UNITY_STANDALONE_WIN
+    //Debug.Log("Stand Alone Windows");
+    GameObject.Find("AdMobPlugin").SetActive(false);
+  #endif
+
 }
-    
+
 function StartGame() {
 
+  //first of all remove the context menu 
+  if (GameObject.Find("ContextMenu") != null)
+    GameObject.Find("ContextMenu").SetActive(false);
+  
   //starting time will be used to set the timer for the first time.
   totalTime = startingTime;
   oneStarScore = 0;
@@ -115,7 +159,7 @@ function StartGame() {
   endMessage.guiText.enabled = false;
   endMessageShadow.guiText.enabled = false;
   
-  bombSpawner.GetComponent(PickupSpawner).StartCoroutine("Spawn");
+  //bombSpawner.GetComponent(PickupSpawner).StartCoroutine("Spawn");
   specialItemsSpawner.GetComponent(SpecialItemsSpawner).StartCoroutine("Spawn");
   
   //you cheating bastards, you will start with a clean score, no matter what!
@@ -147,6 +191,8 @@ function StartGame() {
 
   //this will calculate how many objectives will be needed to clear the level.
   CreateTargets();
+  
+  musicPlayer.GetComponent(MusicManager).StartMusic();
 }
 
 function ProcessEvent( points : int ) {   
@@ -205,13 +251,13 @@ function ProcessBomb() {
     Destroy(go);
   }	
   //specialItemsSpawner.GetComponent(SpecialItemsSpawner).SendMessage("ToggleExists"); 
-  bombSpawner.GetComponent(PickupSpawner).SendMessage("ToggleExists");
+  //bombSpawner.GetComponent(PickupSpawner).SendMessage("ToggleExists");
 }
 
 function ChangeObjective() {
 
   // Create a random wait time before the prop is instantiated.
-  var waitTime : float = Random.Range(2, 8);
+  var waitTime : float = Random.Range(objectiveMinimumTime, objectiveMaximumTime);
   
   var index : int = -1;
   
@@ -379,13 +425,12 @@ function ShowTargets() {
   scale.x = Screen.width/originalWidth; // calculate hor scale
   scale.y = Screen.height/originalHeight; // calculate vert scale
   var fontMultiplier = Mathf.Sqrt((scale.x  * scale.x )  + (scale.y  * scale.y ));
-  var y_pos : float = -0.02;
-  var y_pos_shadow : float = -0.0225;
+  var y_pos : float = -0.025;
+  var y_pos_shadow : float = -0.03;
   var incremental : float = -0.06;
   
   for ( var index : int = 0; index < objectiveList.length ; index++ ) {
-    y_pos += incremental;
-    y_pos_shadow += incremental;
+    
     
 	var tmpName : String = objectiveList[index];
 
@@ -399,7 +444,7 @@ function ShowTargets() {
 	go.guiText.text = tmpName + ' - ' + targetAmount;
 	
 	go.transform.parent = textObjectives.transform;
-	go.transform.localPosition = new Vector3(-0.03, y_pos, -1);
+	go.transform.localPosition = new Vector3(0.01, y_pos, -1);
 	
 	//now the shadow
 	var go_shadow = new GameObject(tmpName + "Text-Shadow", GUIText);
@@ -411,9 +456,10 @@ function ShowTargets() {
 	go_shadow.guiText.text = tmpName + ' - ' + targetAmount;
 	
 	go_shadow.transform.parent = textObjectives.transform;
-	go_shadow.transform.localPosition = new Vector3(-0.03, y_pos_shadow, -1);
+	go_shadow.transform.localPosition = new Vector3(0.01, y_pos_shadow, -1);
 
-    
+    y_pos += incremental;
+    y_pos_shadow += incremental;    
   }
 }
 
@@ -449,7 +495,8 @@ function CleanStage() {
   var crates : GameObject[] = GameObject.FindGameObjectsWithTag("BombPickup");
   for( var go : GameObject in crates) {
    	Destroy(go);
-   	bombSpawner.GetComponent(PickupSpawner).SendMessage("ToggleExists");
+   	//bombSpawner.GetComponent(PickupSpawner).SendMessage("ToggleExists");
+   	specialItemsSpawner.GetComponent(SpecialItemsSpawner).SendMessage("ToggleExists");
   }
   
   //wipe the temporal Assistants too.
@@ -457,4 +504,8 @@ function CleanStage() {
   for( var go : GameObject in assitants) {
   	Destroy(go);
   }
+  
+  musicPlayer.GetComponent(MusicManager).StopMusic();
+  
+  specialItemsSpawner.GetComponent(SpecialItemsSpawner).StopCoroutine("Spawn");
 }
