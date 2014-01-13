@@ -1,7 +1,7 @@
 ﻿var originalWidth : float = 1920.0;  // define here the original resolution
 var originalHeight  : float = 1080.0; // you used to create the GUI contents 
 var originalNormalText : float = 48;
-var originalGUIStyle : GUIStyle;
+//var originalGUIStyle : GUIStyle;
 var originalScoreText : float;
 var originalTimerText : float;
 var originalObjectiveText : float;
@@ -37,6 +37,9 @@ var busText : GameObject;
 var bombText : GameObject;
 var clockText : GameObject;
 var shipText : GameObject;
+
+var style : GUIStyle;
+var restartStyle : GUIStyle;
 
 private var scale: Vector3;
 
@@ -135,17 +138,17 @@ function OnGUI(){
   var startY : int = 800;
   var startX : int = buttonX + 200;
   if (controlCenter.GetComponent(GameManager).starting) {
-  	if (GUI.Button(Rect(startX, startY ,200,100),"Start!"))
+  	if (GUI.Button(Rect(startX, startY ,200,100),"Start!", style))
     controlCenter.GetComponent(GameManager).StartGame();    
   }
   
   if (controlCenter.GetComponent(GameManager).finishing) {
     if ( controlCenter.GetComponent(GameManager).WinEvaluator() ) {
-      if (GUI.Button(Rect(buttonX, restartY,200,100),"Restart!"))
+      if (GUI.Button(Rect(buttonX, restartY,200,100),"Restart!", restartStyle))
       controlCenter.GetComponent(GameManager).StartGame();    
     }
     else {
-      if (GUI.Button(Rect(buttonX, restartY,200,100),"Restart!"))
+      if (GUI.Button(Rect(buttonX, restartY,200,100),"Restart!", restartStyle))
       controlCenter.GetComponent(GameManager).StartGame();    
     }
   	

@@ -74,6 +74,10 @@ function Awake() {
   
   musicPlayer = GameObject.Find("music");
   
+  //simple way to hide the pause menu
+  GameObject.Find("PauseButton").GetComponent(PauseButtonManager).Hide();
+  
+  
   EvaluateAds();
 }
 
@@ -92,11 +96,6 @@ function Start () {
 
 function Update() {
 
-  if (Input.GetKey(KeyCode.Escape)) {
-    Debug.Log("Escaping");
-    
-    Application.Quit();
-  }
   
   if(stop)
     Time.timeScale = 0; // pauses the current scene
@@ -509,3 +508,15 @@ function CleanStage() {
   
   specialItemsSpawner.GetComponent(SpecialItemsSpawner).StopCoroutine("Spawn");
 }
+
+function Pause() {
+  stop = true;
+  musicPlayer.GetComponent(MusicManager).PauseMusic();
+}
+
+function UnPause() {
+  stop = false;
+  musicPlayer.GetComponent(MusicManager).ResumeMusic();
+}
+
+

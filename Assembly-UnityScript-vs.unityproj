@@ -49,11 +49,13 @@
      <Compile Include="Assets\My Scripts\ActionObjectMetaData.js" />
      <Compile Include="Assets\My Scripts\Bomb.js" />
      <Compile Include="Assets\My Scripts\BombPickup.js" />
+     <Compile Include="Assets\My Scripts\ButtonStyle.js" />
      <Compile Include="Assets\My Scripts\GUIManager.js" />
      <Compile Include="Assets\My Scripts\GameManager.js" />
      <Compile Include="Assets\My Scripts\Interactor.js" />
      <Compile Include="Assets\My Scripts\MainScore.js" />
      <Compile Include="Assets\My Scripts\MusicManager.js" />
+     <Compile Include="Assets\My Scripts\PauseButtonManager.js" />
      <Compile Include="Assets\My Scripts\PickupSpawner.js" />
      <Compile Include="Assets\My Scripts\Presser.js" />
      <Compile Include="Assets\My Scripts\Spawner.js" />

@@ -3,14 +3,22 @@
 var holdingKey : boolean = false;
 var go: GameObject;
 var moving: boolean = false;
+var controlCenter : GameObject;
+
+function Awake() {
+  controlCenter = GameObject.Find("ControlCenter");
+}
 
 function Start () {
 
 }
 
 function Update () {
-  
    
+   //if it is paused or stoped do nothing
+   if (controlCenter.GetComponent(GameManager).stop)
+     return;
+     
    if ( holdingKey && Input.GetAxisRaw("Press") == 0 && Input.touchCount == 0 ) {
       moving = false;
       holdingKey = false;
