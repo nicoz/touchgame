@@ -1167,9 +1167,9 @@ MonoBehaviour:
   darkBackground: {fileID: 2800000, guid: 5b39f3498b3c64b429ec2741e91a7673, type: 3}
   lightBackground: {fileID: 2800000, guid: 975975dbb2b2710468aa64f84f24d99e, type: 3}
   currentAd:
-    icon: {fileID: 2800000, guid: a0eff840123186b4a97e58764a06116a, type: 3}
-    action: {fileID: 2800000, guid: 87cb40c70b3249c4896cb0ef2bff4e61, type: 3}
-    text: A data structure is just a stupid programming language.
+    icon: {fileID: 2800000, guid: 9af03d6d762bd4f4a8e8d9c435989f81, type: 3}
+    action: {fileID: 2800000, guid: cf53756917301da499205cef5c050738, type: 3}
+    text: The best is the enemy of the good.
 --- !u!114 &701607686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4547,6 +4547,7 @@ GameObject:
   - 92: {fileID: 1972830850}
   - 124: {fileID: 1972830849}
   - 81: {fileID: 1972830847}
+  - 114: {fileID: 1972830848}
   m_Layer: 0
   m_Name: mainCamera
   m_TagString: MainCamera
@@ -4562,6 +4563,17 @@ AudioListener:
   m_PrefabInternal: {fileID: 1243540802}
   m_GameObject: {fileID: 1972830846}
   m_Enabled: 1
+--- !u!114 &1972830848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1972830846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec480a745baeeef4e91b5369fc188766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!124 &1972830849
 Behaviour:
   m_ObjectHideFlags: 0
