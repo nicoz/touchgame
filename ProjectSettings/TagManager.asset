@@ -15,6 +15,8 @@ TagManager:
   - SpaceShip
   - Assistants
   - SpecialItems
+  - SoundPrefab
+  - MusicPrefab
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

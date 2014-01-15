@@ -40,6 +40,24 @@ var shipText : GameObject;
 
 var style : GUIStyle;
 var restartStyle : GUIStyle;
+var pauseButtonStyle : GUIStyle;
+var startButtonStyle : GUIStyle;
+var musicOnButtonStyle : GUIStyle;
+var musicOffButtonStyle : GUIStyle;
+var soundOnButtonStyle : GUIStyle;
+var soundOffButtonStyle : GUIStyle;
+
+var pauseMenuButtons : boolean = false;
+var pauseMenuOptionButtons : boolean = false;
+
+var pauseMenu : GameObject;
+
+private var music : GameObject;
+private var soundCenter : GameObject;
+
+private var showingPauseMenu : boolean = false;
+
+private var gameStarted : boolean = false;
 
 private var scale: Vector3;
 
@@ -47,6 +65,9 @@ private var scale: Vector3;
 function Awake() {
   
   controlCenter = GameObject.Find("ControlCenter");
+  
+  music = GameObject.Find("music");
+  soundCenter = GameObject.Find("sound");
   
   score = GameObject.Find('Score');
   score_shadow = GameObject.Find('Score-shadow');
@@ -82,15 +103,9 @@ function Awake() {
   
   originalInstructionsText = swanText.guiText.fontSize;
   originalTitleText = title.guiText.fontSize;
+  
+  pauseMenu = GameObject.Find("PauseMenu");
 } 
-
-/*function Update() {
-  scale.x = Screen.width/originalWidth; // calculate hor scale
-  scale.y = Screen.height/originalHeight; // calculate vert scale
-  var titleMultiplier = Mathf.Sqrt((scale.x  * scale.x )  + (scale.y  * scale.y ));
-  title.guiText.fontSize = originalTitleText * titleMultiplier;
-  Debug.Log(title.guiText.fontSize);
-}*/
 
 function OnGUI(){
   scale.x = Screen.width/originalWidth; // calculate hor scale
@@ -154,7 +169,134 @@ function OnGUI(){
   	
   }
   
+  if (gameStarted && !(pauseMenuButtons || pauseMenuOptionButtons)) {
+    if (GUI.Button(Rect(30, 50 ,100,100),"", pauseButtonStyle))
+      TogglePauseMenu();
+  }
+  
+  if (gameStarted && (pauseMenuButtons || pauseMenuOptionButtons)) {
+    if (GUI.Button(Rect(30, 50 ,100,100),"", startButtonStyle))
+      TogglePauseMenu();
+  }
+  
+  //Paused menu
+  if (pauseMenuButtons) {
+  
+    if (GUI.Button(Rect(buttonX + 35, 250 ,200,100),"Resume", restartStyle))
+      TogglePauseMenu();
+  
+    if (GUI.Button(Rect(buttonX  + 35, 400 ,200,100),"Restart", restartStyle)) {
+      TogglePauseMenu();
+      controlCenter.GetComponent(GameManager).RestartGame();    
+    }
+    
+    if (GUI.Button(Rect(buttonX  + 35, 550 ,200,100),"Options", restartStyle)) 
+      ShowPauseMenuOptionButtons();    
+    
+    if (GUI.Button(Rect(buttonX  + 35, 700 ,200,100),"Exit", restartStyle))
+      MenuScene();    
+  }
+  
+  //Paused option menu
+  if (pauseMenuOptionButtons) {
+    if (GUI.Button(Rect(buttonX  + 35, 700 ,200,100),"Back", restartStyle))
+      HidePauseMenuOptionButtons();   
+      
+    var musicStyle : GUIStyle;
+    if  (music.GetComponent(MusicManager).soundActive)
+      musicStyle = musicOnButtonStyle;
+    else 
+      musicStyle = musicOffButtonStyle;
+    
+    if (GUI.Button(Rect(buttonX  + 35, 250 ,200,200),"", musicStyle))
+      music.GetComponent(MusicManager).ToggleSound();
+      
+    var soundStyle : GUIStyle;
+    if  (soundCenter.GetComponent(SoundManager).soundActive)
+      soundStyle = soundOnButtonStyle;
+    else 
+      soundStyle = soundOffButtonStyle;
+    
+    if (GUI.Button(Rect(buttonX  + 35, 470 ,200,200),"", soundStyle))
+      soundCenter.GetComponent(SoundManager).ToggleSound();
+  }
   // restore matrix before returning
   GUI.matrix = svMat; // restore matrix
   
 }
+
+function ToggleGameStarted() {
+  gameStarted  = !gameStarted;
+}
+
+function TogglePauseMenu() {
+  if (!showingPauseMenu) {
+    ShowPauseMenu();
+    
+  } else {
+    HidePauseMenu();
+  }
+  
+  showingPauseMenu = !showingPauseMenu;
+}
+
+function ShowPauseMenu() {
+  controlCenter.GetComponent(GameManager).SendMessage("Pause");  
+  ToggleVisibility(pauseMenu.transform, true);
+  ShowPauseMenuButtons();
+}
+
+function HidePauseMenu() {
+  controlCenter.GetComponent(GameManager).SendMessage("UnPause");
+  ToggleVisibility(pauseMenu.transform, false);  
+  HidePauseMenuOptionButtons();
+  HidePauseMenuButtons();
+}
+
+function ToggleVisibility(obj : Transform, state : boolean) {  
+  for ( var i : int = 0; i < obj.childCount; i++) {
+    if (obj.GetChild(i).guiTexture != null)
+      obj.GetChild(i).guiTexture.enabled = state;
+      
+    if (obj.GetChild(i).guiText != null)
+      obj.GetChild(i).guiText.enabled = state;
+      
+    if (obj.GetChild(i).gameObject.GetComponent(SpriteRenderer) != null)
+      obj.GetChild(i).gameObject.GetComponent(SpriteRenderer).enabled = state;
+
+    if (obj.GetChild(i).childCount > 0) {
+      ToggleVisibility(obj.GetChild(i), state);
+    }
+  }
+}
+
+function ShowPauseMenuButtons() {
+
+  pauseMenuButtons = true;
+  
+}
+
+function HidePauseMenuButtons() {
+
+  pauseMenuButtons = false;  
+  
+}
+
+function ShowPauseMenuOptionButtons() {
+
+  HidePauseMenuButtons();
+  pauseMenuOptionButtons = true;
+  
+}
+
+function HidePauseMenuOptionButtons() {
+
+  ShowPauseMenuButtons();
+  pauseMenuOptionButtons = false;
+  
+}
+
+function MenuScene() {
+  Application.LoadLevel("HomeMenu");
+}
+

@@ -1,14 +1,23 @@
 ﻿#pragma strict
 private var started : boolean = false;
+var soundActive : boolean = true;
+
+function Awake() {
+  DontDestroyOnLoad(transform.gameObject);
+}
+
 
 function StartMusic() {
-   started = true;
-   gameObject.audio.Play();   
+  started = true;
+  if (soundActive) {  
+    gameObject.audio.Play();   
+  }  
 }
 
 function StopMusic() {
   started = false;
   gameObject.audio.Stop();
+  
 }
 
 function PauseMusic() {
@@ -17,6 +26,10 @@ function PauseMusic() {
 }
 
 function ResumeMusic() {
-  if (started)
+  if (started && soundActive)
     gameObject.audio.Play();
+}
+
+function ToggleSound() {
+  soundActive = !soundActive;
 }

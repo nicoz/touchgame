@@ -75,7 +75,7 @@ function Awake() {
   musicPlayer = GameObject.Find("music");
   
   //simple way to hide the pause menu
-  GameObject.Find("PauseButton").GetComponent(PauseButtonManager).Hide();
+  gameObject.GetComponent(GUIManager).ToggleVisibility(GameObject.Find("PauseMenu").transform, false);
   
   
   EvaluateAds();
@@ -141,6 +141,8 @@ function EvaluateAds() {
 
 function StartGame() {
 
+  gameObject.GetComponent(GUIManager).ToggleGameStarted();
+  
   //first of all remove the context menu 
   if (GameObject.Find("ContextMenu") != null)
     GameObject.Find("ContextMenu").SetActive(false);
@@ -346,6 +348,19 @@ function FinishGame() {
   }
 }
 
+function RestartGame() {
+  //ok, now the game is finishing;
+  finishing = true;
+  
+  //back to pausing it, to show some stuff to the player
+  stop =  true;
+  
+  starting = true;
+  
+  CleanStage();
+  StartGame();
+}
+
 function WinEvaluator () {
   //this will search the objectives and targets arrays, if there is even
   //one element left on the targets the player looses, else he/she/it wins
@@ -463,7 +478,8 @@ function ShowTargets() {
 }
 
 function CleanStage() {
-
+  gameObject.GetComponent(GUIManager).ToggleGameStarted();
+  
   objective.guiText.text = "";
   objective.guiText.enabled = false;
   objectiveShadow.guiText.enabled = false;
@@ -507,6 +523,11 @@ function CleanStage() {
   musicPlayer.GetComponent(MusicManager).StopMusic();
   
   specialItemsSpawner.GetComponent(SpecialItemsSpawner).StopCoroutine("Spawn");
+  
+  
+  StopCoroutine("ChangeObjective");
+    
+  StopCoroutine("ProcessTime");
 }
 
 function Pause() {

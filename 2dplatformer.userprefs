@@ -1,21 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\My Scripts\GUIManager.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\My Scripts\homeMenu\HomeMenuGUIManager.js">
     <Files>
-      <File FileName="Assets\My Scripts\GameManager.js" Line="112" Column="19" />
-      <File FileName="Assets\My Scripts\TrajectoryChanger.js" Line="1" Column="1" />
-      <File FileName="Assets\My Scripts\Presser.js" Line="1" Column="1" />
-      <File FileName="Assets\My Scripts\GUIManager.js" Line="151" Column="78" />
-      <File FileName="Assets\My Scripts\SpecialItemsPickup.js" Line="1" Column="1" />
-      <File FileName="Assets\My Scripts\Bomb.js" Line="1" Column="1" />
-      <File FileName="Assets\My Scripts\BombPickup.js" Line="1" Column="1" />
-      <File FileName="Assets\My Scripts\SpecialItemsSpawner.js" Line="1" Column="1" />
-      <File FileName="Assets\My Scripts\Spawner.js" Line="1" Column="1" />
-      <File FileName="Assets\My Scripts\MusicManager.js" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Mics\Advertisement\AdvertisementHandler.cs" Line="1" Column="1" />
-      <File FileName="Assets\My Scripts\PauseButtonManager.js" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Destroyer.cs" Line="35" Column="32" />
-      <File FileName="Assets\My Scripts\ButtonStyle.js" Line="3" Column="1" />
+      <File FileName="Assets\My Scripts\GUIManager.js" Line="286" Column="1" />
+      <File FileName="Assets\My Scripts\homeMenu\HomeMenuGUIManager.js" Line="143" Column="26" />
+      <File FileName="Assets\My Scripts\SoundManager.js" Line="8" Column="1" />
+      <File FileName="Assets\My Scripts\MusicManager.js" Line="35" Column="2" />
+      <File FileName="Assets\My Scripts\GameManager.js" Line="21" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
