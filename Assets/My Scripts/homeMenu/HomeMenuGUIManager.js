@@ -133,14 +133,24 @@ function OnGUI() {
 
     
     //GUI.Button(Rect (0, 0, 220, 200), "Game Designer");
-    GUI.Label(Rect (0, 30, 220, 200), "1 Game Designer", creditStyleTitle);
-    GUI.Label(Rect (0, 80, 220, 200), "2 Game Designer", creditStyleText);
-    GUI.Label(Rect (0, 130, 220, 200), "1 Lead Designer", creditStyleTitle);
-    GUI.Label(Rect (0, 180, 220, 200), "2 Lead Designer", creditStyleText);
-    GUI.Label(Rect (0, 230, 220, 200), "1 Developers", creditStyleTitle);
-    GUI.Label(Rect (0, 280, 220, 200), "2 Developers", creditStyleText);
-    GUI.Label(Rect (0, 330, 220, 200), "1 Testers", creditStyleTitle);
-    GUI.Label(Rect (0, 380, 220, 200), "2 Testers", creditStyleText);
+    GUI.Label(Rect (0, 0, 220, 200), "Game Designer", creditStyleTitle);
+    GUI.Label(Rect (0, 60, 220, 200), "Nicolas Zuasti", creditStyleText);
+    
+    GUI.Label(Rect (0, 100, 220, 200), "Lead Designer", creditStyleTitle);
+    GUI.Label(Rect (0, 160, 220, 200), "Valentina Mele", creditStyleText);
+    
+    GUI.Label(Rect (0, 200, 220, 200), "Developers", creditStyleTitle);
+    GUI.Label(Rect (0, 260, 220, 200), "Nicolas Zuasti", creditStyleText);
+    GUI.Label(Rect (0, 290, 220, 200), "Hernan Lopez", creditStyleText);
+    GUI.Label(Rect (0, 320, 220, 200), "Leonardo Rivero", creditStyleText);
+    GUI.Label(Rect (0, 350, 220, 200), "Mathias Chubrega", creditStyleText);
+    GUI.Label(Rect (0, 380, 220, 200), "Alvaro Correa", creditStyleText);
+    
+    GUI.Label(Rect (0, 420, 220, 200), "Testers", creditStyleTitle);
+    GUI.Label(Rect (0, 480, 220, 200), "Valentina Mele", creditStyleText);
+    GUI.Label(Rect (0, 510, 220, 200), "Hernan Lopez", creditStyleText);
+    GUI.Label(Rect (0, 540, 220, 200), "Leonardo Rivero", creditStyleText);
+    
     // End the scroll view that we began above.
     GUI.EndScrollView ();
     
@@ -163,7 +173,8 @@ function ToggleCredits() {
 }
 
 function NextScene() {
-  Application.LoadLevel("London");
+  //Application.LoadLevel("London");
+  Application.LoadLevel("LevelSelection");
 }
 
 function ExitGame() {

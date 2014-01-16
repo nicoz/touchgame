@@ -1179,8 +1179,8 @@ MonoBehaviour:
   darkBackground: {fileID: 2800000, guid: 5b39f3498b3c64b429ec2741e91a7673, type: 3}
   lightBackground: {fileID: 2800000, guid: 975975dbb2b2710468aa64f84f24d99e, type: 3}
   currentAd:
-    icon: {fileID: 2800000, guid: 42f0fee300d07b347874caf6491a8e1e, type: 3}
-    action: {fileID: 2800000, guid: 87cb40c70b3249c4896cb0ef2bff4e61, type: 3}
+    icon: {fileID: 2800000, guid: a0eff840123186b4a97e58764a06116a, type: 3}
+    action: {fileID: 2800000, guid: 8dfbace6cba0c764aa4d45617a306291, type: 3}
     text: Programming is hard, let's go shopping.
 --- !u!114 &701607686
 MonoBehaviour:
@@ -3675,8 +3675,8 @@ MonoBehaviour:
   - {fileID: 100000, guid: 38b180966941008498090aa81fba1cf6, type: 2}
   pickupDeliveryTime: 28
   maxPickupDeliveryTime: 20
-  dropRangeLeft: -22.5
-  dropRangeRight: 22.5
+  dropRangeLeft: -20
+  dropRangeRight: 20
   minHeight: -7
   maxHeight: 15
   exists: 0

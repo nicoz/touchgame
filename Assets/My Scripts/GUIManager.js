@@ -297,6 +297,6 @@ function HidePauseMenuOptionButtons() {
 }
 
 function MenuScene() {
-  Application.LoadLevel("HomeMenu");
+  Application.LoadLevel("LevelSelection");
 }
 
