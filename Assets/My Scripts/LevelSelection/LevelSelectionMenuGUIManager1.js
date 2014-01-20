@@ -26,16 +26,21 @@ var menuOptionButtons : boolean = false;
 
 var gameTitle : GameObject;
 
+var londonImages : Sprite[];
+
 // The position on of the scrolling viewport
 var scrollPosition : Vector2 = Vector2.zero;
+
+var points : GameObject;
 	
 function Awake() {
   controlCenter = GameObject.Find("controlCenter");     
   
+  points = GameObject.Find("points");
 }
 
 function Start() {
-  
+  SetButtons();
 }
 
 function OnGUI() {
@@ -83,4 +88,11 @@ function NextScene() {
 
 function PreviousScene() {
   Application.LoadLevel("HomeMenu");
+}
+
+function SetButtons() {
+  var londonStars = points.GetComponent(PointsManager).GetPoints("london");
+  //london points
+  var london : GameObject = GameObject.Find("london");
+  london.GetComponent(SpriteRenderer).sprite = londonImages[londonStars];
 }

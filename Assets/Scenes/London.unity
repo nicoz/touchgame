@@ -1179,9 +1179,9 @@ MonoBehaviour:
   darkBackground: {fileID: 2800000, guid: 5b39f3498b3c64b429ec2741e91a7673, type: 3}
   lightBackground: {fileID: 2800000, guid: 975975dbb2b2710468aa64f84f24d99e, type: 3}
   currentAd:
-    icon: {fileID: 2800000, guid: a0eff840123186b4a97e58764a06116a, type: 3}
+    icon: {fileID: 2800000, guid: aa33e0a9e023cdf4b8adabbb7bd8bd23, type: 3}
     action: {fileID: 2800000, guid: 8dfbace6cba0c764aa4d45617a306291, type: 3}
-    text: Programming is hard, let's go shopping.
+    text: Bugs that go away by themselves come back by themselves.
 --- !u!114 &701607686
 MonoBehaviour:
   m_ObjectHideFlags: 0

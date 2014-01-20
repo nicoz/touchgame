@@ -378,19 +378,24 @@ function WinEvaluator () {
 }
 
 function ShowWin( finalScore : int ) {
+  var points = GameObject.Find("points");
+  
   endMessage.guiText.text = "You Win!";
   endMessage.guiText.enabled = true;
   endMessageShadow.guiText.enabled = true;
   if ( finalScore > oneStarScore ) {
     starOne.GetComponent(SpriteRenderer).enabled = true;
+    points.GetComponent(PointsManager).SetPoints("london", 1);
   }
 
   if ( finalScore > twoStarScore ) {
     starTwo.GetComponent(SpriteRenderer).enabled = true;
+    points.GetComponent(PointsManager).SetPoints("london", 2);
   }
 
   if ( finalScore > threeStarScore ) {
     starThree.GetComponent(SpriteRenderer).enabled = true;
+    points.GetComponent(PointsManager).SetPoints("london", 3);
   }	  
 }
 

@@ -2057,7 +2057,13 @@ MonoBehaviour:
   menuOptions: 1
   menuOptionButtons: 0
   gameTitle: {fileID: 0}
+  londonImages:
+  - {fileID: 21300000, guid: 1dad78a54a94fb249a8262fe7aab5ed4, type: 3}
+  - {fileID: 21300000, guid: f714b13a35e07da49b01107a2f7d42e3, type: 3}
+  - {fileID: 21300000, guid: fa2682fd9c73a8a4c81d273fced06a36, type: 3}
+  - {fileID: 21300000, guid: b6bee7eefad793846a61361f8b31e10c, type: 3}
   scrollPosition: {x: 0, y: 0}
+  points: {fileID: 0}
 --- !u!4 &2091944911
 Transform:
   m_ObjectHideFlags: 0

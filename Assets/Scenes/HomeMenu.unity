@@ -447,6 +447,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 673467761}
   - 114: {fileID: 673467760}
+  - 114: {fileID: 673467762}
   m_Layer: 0
   m_Name: controlCenter
   m_TagString: Untagged
@@ -1066,8 +1067,6 @@ MonoBehaviour:
   menuOptions: 1
   menuOptionButtons: 0
   gameTitle: {fileID: 0}
-  musicPrefab: {fileID: 400000, guid: caeec749abc7dbd47ac4ff011ebd4ae0, type: 2}
-  soundPrefab: {fileID: 400000, guid: d9ec041bb3294dc459f334f295280179, type: 2}
   scrollPosition: {x: 0, y: 0}
 --- !u!4 &673467761
 Transform:
@@ -1080,6 +1079,20 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &673467762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 673467759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f34a8f03e65ed46b6026ee0d2c8267, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicPrefab: {fileID: 400000, guid: caeec749abc7dbd47ac4ff011ebd4ae0, type: 2}
+  soundPrefab: {fileID: 400000, guid: d9ec041bb3294dc459f334f295280179, type: 2}
+  pointsPrefab: {fileID: 400000, guid: e5ba73499a90725409d4ced186679af3, type: 2}
 --- !u!1 &724384403
 GameObject:
   m_ObjectHideFlags: 0

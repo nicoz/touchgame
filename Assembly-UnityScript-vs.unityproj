@@ -65,7 +65,9 @@
      <Compile Include="Assets\My Scripts\SpecialItemsPickup.js" />
      <Compile Include="Assets\My Scripts\SpecialItemsSpawner.js" />
      <Compile Include="Assets\My Scripts\TrajectoryChanger.js" />
+     <Compile Include="Assets\My Scripts\homeMenu\GlobalObjectsManager.js" />
      <Compile Include="Assets\My Scripts\homeMenu\HomeMenuGUIManager.js" />
+     <Compile Include="Assets\My Scripts\homeMenu\PointsManager.js" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\AdMobPlugin\LICENSE.txt" />
   </ItemGroup>

@@ -28,8 +28,8 @@ var gameTitle : GameObject;
 
 private var music : GameObject;
 private var soundCenter : GameObject;
-var musicPrefab : Transform;
-var soundPrefab : Transform;
+private var pointsCenter : GameObject;
+
 
 // The position on of the scrolling viewport
 var scrollPosition : Vector2 = Vector2.zero;
@@ -38,25 +38,15 @@ function Awake() {
   controlCenter = GameObject.Find("controlCenter");
   
   gameTitle = GameObject.Find("GameTitle");
-  
-  
+    
   
   originalTitleText = gameTitle.guiText.fontSize;
 }
 
-function Start() {
-  if (!(GameObject.FindWithTag("MusicPrefab"))) {    
-    var musicInstance : Transform = Instantiate(musicPrefab, transform.position, transform.rotation);
-    musicInstance.name = "music";
-  }
-  
-  if (!(GameObject.FindWithTag("SoundPrefab"))) {    
-    var soundInstance : Transform = Instantiate(soundPrefab, transform.position, transform.rotation);
-    soundInstance.name = "sound";
-  }
-  
-  music = GameObject.Find("music");
-  soundCenter = GameObject.Find("sound");
+function Start() {  
+  music = controlCenter.GetComponent(GlobalObjectsManager).GetMusic();
+  soundCenter = controlCenter.GetComponent(GlobalObjectsManager).GetSound();
+  pointsCenter = controlCenter.GetComponent(GlobalObjectsManager).GetPoints();
 }
 
 function OnGUI() {
