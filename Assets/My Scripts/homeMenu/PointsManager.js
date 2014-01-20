@@ -24,7 +24,8 @@ function SetPoints(level : String, stars : int) {
     }
    }
    
-   points[index] = stars;
+   if ( parseInt(points[index].ToString()) < stars)
+     points[index] = stars;
 }
 
 function GetPoints(level : String) {
