@@ -1093,6 +1093,9 @@ MonoBehaviour:
   musicPrefab: {fileID: 400000, guid: caeec749abc7dbd47ac4ff011ebd4ae0, type: 2}
   soundPrefab: {fileID: 400000, guid: d9ec041bb3294dc459f334f295280179, type: 2}
   pointsPrefab: {fileID: 400000, guid: e5ba73499a90725409d4ced186679af3, type: 2}
+  music: {fileID: 0}
+  sound: {fileID: 0}
+  points: {fileID: 0}
 --- !u!1 &724384403
 GameObject:
   m_ObjectHideFlags: 0

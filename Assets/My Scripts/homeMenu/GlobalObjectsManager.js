@@ -5,12 +5,11 @@ var soundPrefab : Transform;
 var pointsPrefab : Transform;
 
 
-private var music : GameObject;
-private var sound : GameObject;
-private var points : GameObject;
+var music : GameObject;
+var sound : GameObject;
+var points : GameObject;
 
-
-function Start() {
+function Awake() {
   if (!(GameObject.FindWithTag("MusicPrefab"))) {    
     var musicInstance : Transform = Instantiate(musicPrefab, transform.position, transform.rotation);
     musicInstance.name = "music";
@@ -25,6 +24,9 @@ function Start() {
     var pointsInstance : Transform = Instantiate(pointsPrefab, transform.position, transform.rotation);
     pointsInstance.name = "points";
   }
+
+}
+function Start() {
   
   music = GameObject.Find("music");
   sound = GameObject.Find("sound");

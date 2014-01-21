@@ -1,7 +1,6 @@
 ﻿#pragma strict
 
 var levels : String[];
-var points = new Array();
 
 function Awake() {
   DontDestroyOnLoad(transform.gameObject);
@@ -10,31 +9,21 @@ function Awake() {
 
 
 function CreatePoints() {  
-  for (var i : int = 0; i < levels.length; i++) {
-    points.Add(0);
+  if (PlayerPrefs.GetInt("london") == null) {
+    PlayerPrefs.SetInt("london", 0);
   }
-
+  
+  
+  PlayerPrefs.Save();
 }
 
 function SetPoints(level : String, stars : int) {
-  var index : int = 0;
-  for (var i : int = 0; i < levels.length; i++) {
-    if (levels[i] == level) {
-      index = i;
-    }
-   }
-   
-   if ( parseInt(points[index].ToString()) < stars)
-     points[index] = stars;
+  PlayerPrefs.SetInt(level, stars);
+  PlayerPrefs.Save();
 }
 
 function GetPoints(level : String) {
-  var index : int = 0;
-  for (var i : int = 0; i < levels.length; i++) {
-    if (levels[i] == level) {
-      index = i;
-    }
-   }
+  
    
-   return points[index];
+   return PlayerPrefs.GetInt("london");
 }

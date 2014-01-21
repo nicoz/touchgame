@@ -44,9 +44,9 @@ function Awake() {
 }
 
 function Start() {  
-  music = controlCenter.GetComponent(GlobalObjectsManager).GetMusic();
-  soundCenter = controlCenter.GetComponent(GlobalObjectsManager).GetSound();
-  pointsCenter = controlCenter.GetComponent(GlobalObjectsManager).GetPoints();
+  music = GameObject.Find("music");
+  soundCenter = GameObject.Find("sound");
+  pointsCenter = GameObject.Find("points");
 }
 
 function OnGUI() {
